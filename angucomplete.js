@@ -82,11 +82,18 @@ angular.module('angucomplete', [] )
                             image = imageUri + responseData[i][$scope.imageField];
                         }
 
-                        var text = titleCode.join(' ');
+                        var text = titleCode.join(' ');                        
                         if ($scope.matchClass) {
                             var re = new RegExp(str, 'i');
-                            var strPart = text.match(re)[0];
-                            text = $sce.trustAsHtml(text.replace(re, '<span class="'+ $scope.matchClass +'">'+ strPart +'</span>'));
+                            if(text.match(re) != null)
+                            {
+                                var strPart = text.match(re)[0];
+                                text = $sce.trustAsHtml(text.replace(re, '<span class="'+ $scope.matchClass +'">'+ strPart +'</span>'));
+                            }
+                            else
+                            {
+                                text = $sce.trustAsHtml(text);
+                            }                            
                         }
 
                         var resultRow = {
